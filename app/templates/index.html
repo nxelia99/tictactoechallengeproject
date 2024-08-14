@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Tic Tac Toe{% endblock %}
+
+{% block content %}
+<br><br><br><br><br><br>
+<div class="container">
+    <h2>Welcome to Tic Tac Toe Game</h2>
+    <p>Are you ready for a new match?</p>
+    <button id="createGameBtn">Create Game</button>
+</div>
+
+<script type="module">
+    import { createGame } from "{{ url_for('static', filename='services/game_functions.js') }}";
+    
+    // Event listener for the Create Game button
+    document.getElementById('createGameBtn').addEventListener('click', createGame);
+</script>
+{% endblock %}

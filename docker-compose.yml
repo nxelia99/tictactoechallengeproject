@@ -1,0 +1,16 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - db_data:/app/tic_tac_toe.db  # Volume for the db
+    environment:
+      - FLASK_ENV=development
+      - DATABASE_URL=sqlite:///tic_tac_toe.db
+    command: python run.py
+
+volumes:
+  db_data:
+

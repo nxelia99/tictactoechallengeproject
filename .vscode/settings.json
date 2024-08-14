@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./app/domain/use_cases",
+        "./app/domain"
+    ]
+}

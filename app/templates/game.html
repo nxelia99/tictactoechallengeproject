@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Tic Tac Toe Game{% endblock %}
+
+{% block content %}
+<div class="game-container">
+    <h2>Tic Tac Toe Game</h2>
+    <br><br>
+    <h4>Match ID: <span id="matchId"></span></h4>
+    <p>Current Turn: <span id="currentTurn"></span></p>
+    <div id="board" class="board">
+        <!-- Create the board through an iteration -->
+        {% for i in range(3) %}
+            <div class="row">
+            {% for j in range(3) %}
+                <div class="cell" data-x="{{ i }}" data-y="{{ j }}"></div>
+            {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+    <p id="status"></p>
+    <br><br>
+    <p>Are you ready for a new match?</p>
+    <button id="createGameBtn">Create Game</button>
+</div>
+
+<script type="module">
+    
+    import { makeMove, updateBoard, createGame, initGame } from "{{ url_for('static', filename='services/game_functions.js') }}";
+    
+    const matchId = "{{ match_id }}";
+    let currentTurn = "X";
+    
+    document.getElementById('matchId').textContent = matchId;
+    document.getElementById('currentTurn').textContent = currentTurn;
+    
+    // Initialize the game when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM fully loaded. Initializing game...');
+        initGame(matchId, currentTurn);
+    });
+
+    // Event listener for the Create Game button
+    document.getElementById('createGameBtn').addEventListener('click', createGame);
+
+    // Event listeners added to all cells
+    document.querySelectorAll('.cell').forEach(cell => {
+        cell.addEventListener('click', function() {
+            const x = this.getAttribute('data-x');
+            const y = this.getAttribute('data-y');
+            makeMove(x, y);
+        });
+    });
+</script>
+{% endblock %}
